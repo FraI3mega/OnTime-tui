@@ -5,26 +5,26 @@ use serde::Deserialize;
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 struct StopData {
-    stop_point_symbol: String,
-    stop_point_id: u8,
-    stop_point_name: String,
-    response_date: usize,
+    _stop_point_symbol: String,
+    _stop_point_id: u8,
+    _stop_point_name: String,
+    _response_date: usize,
     departures: Vec<BusData>,
 }
 
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 struct BusData {
-    course_id: usize,
-    scheduled_departure_sec: u32,
-    scheduled_departure: usize,
+    _course_id: usize,
+    _scheduled_departure_sec: u32,
+    _scheduled_departure: usize,
     real_departure: usize,
-    vehicle_id: String,
-    variant_id: u32,
-    order_in_course: u8,
-    passed: bool,
-    lack: bool,
-    on_stop_point: bool,
+    _vehicle_id: String,
+    _variant_id: u32,
+    _order_in_course: u8,
+    _passed: bool,
+    _lack: bool,
+    _on_stop_point: bool,
     line_name: String,
     direction_name: String,
 }
