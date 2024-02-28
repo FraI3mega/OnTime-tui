@@ -8,7 +8,7 @@ use time::OffsetDateTime;
 struct StopData {
     _stop_point_symbol: String,
     _stop_point_id: u8,
-    _stop_point_name: String,
+    stop_point_name: String,
     _response_date: usize,
     departures: Vec<BusData>,
 }
@@ -50,6 +50,10 @@ fn main() -> Result<()> {
         ]);
     }
 
+    println!(
+        "Stop id: {}, stop name: {}",
+        stop_number, stop_data.stop_point_name
+    );
     println!("{}", table);
     Ok(())
 }
