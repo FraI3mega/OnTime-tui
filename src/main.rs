@@ -1,4 +1,5 @@
 use color_eyre::eyre::Result;
+use comfy_table::Table;
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
@@ -31,8 +32,21 @@ struct BusData {
 fn main() -> Result<()> {
     color_eyre::install()?;
     //TODO: Add stop selection
-    let stop = 263;
-    println!("{:#?}", get_stop_data(stop)?);
+    let stop_number = 263;
+
+    let stop_data = get_stop_data(stop_number)?;
+    let mut table = Table::new();
+    table.set_header(vec!["Line number", "Line name", "Arrivesi in"]);
+
+    for bus in stop_data.departures {
+        table.add_row(vec![
+            bus.line_name,
+            bus.direction_name,
+            bus.real_departure.to_string(),
+        ]);
+    }
+
+    println!("{}", table);
     Ok(())
 }
 
