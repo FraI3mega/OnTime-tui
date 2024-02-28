@@ -2,6 +2,7 @@ use color_eyre::eyre::Result;
 use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 struct StopData {
     stop_point_symbol: String,
     stop_point_id: u8,
@@ -11,6 +12,7 @@ struct StopData {
 }
 
 #[derive(Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
 struct BusData {
     course_id: usize,
     scheduled_departure_sec: u32,
