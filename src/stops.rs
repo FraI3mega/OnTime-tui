@@ -31,11 +31,11 @@ pub struct BusData {
     pub direction_name: String,
 }
 
-pub fn get_stop_data(stop_number: u16) -> Result<StopData> {
+pub fn get_stop_data(main_url: String, stop_number: u16) -> Result<StopData> {
     let data: StopData = ureq::get(
         format!(
-            "https://dip.mzkopole.pl/getRealtime.json?stopPointSymbol={}",
-            stop_number
+            "{}getRealtime.json?stopPointSymbol={}",
+            main_url, stop_number
         )
         .as_str(),
     )
@@ -68,4 +68,8 @@ pub fn select_stop(stops: HashMap<String, u16>) -> Result<u16> {
         .map(|out| out.selected_items)
         .unwrap_or_else(|| Vec::new());
     Ok(*stops.get(&selected_items[0].output().to_string()).unwrap())
+}
+
+fn get_stops(url: String) {
+    todo!("Not done")
 }

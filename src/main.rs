@@ -14,8 +14,9 @@ fn main() -> Result<()> {
     let stop_str = include_str!("stops.json");
     let stops: HashMap<String, u16> = serde_json::from_str(stop_str)?;
     let stop_number = select_stop(stops)?;
+    let main_url = "https://dip.mzkopole.pl/".to_string();
 
-    let stop_data = get_stop_data(stop_number)?;
+    let stop_data = get_stop_data(main_url, stop_number)?;
     let mut table = Table::new();
     table.set_header(vec!["Line number", "Line name", "Arrives in"]);
 
