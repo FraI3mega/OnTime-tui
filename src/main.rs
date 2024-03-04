@@ -12,7 +12,7 @@ use time::OffsetDateTime;
 struct StopData {
     _stop_point_symbol: String,
     _stop_point_id: u16,
-    stop_point_name: String,
+    _stop_point_name: String,
     _response_date: usize,
     departures: Vec<BusData>,
 }
@@ -39,7 +39,6 @@ fn main() -> Result<()> {
 
     let stop_str = include_str!("stops.json");
     let stops: HashMap<String, u16> = serde_json::from_str(stop_str)?;
-    // TODO: Add stop selection using stops and skim
     let stop_number = select_stop(stops)?;
 
     let stop_data = get_stop_data(stop_number)?;
@@ -57,10 +56,10 @@ fn main() -> Result<()> {
         ]);
     }
 
-    println!(
-        "Stop id: {}, stop name: {}",
-        stop_number, stop_data.stop_point_name
-    );
+    // println!(
+    //     "Stop id: {}, stop name: {}",
+    //     stop_number, stop_data.stop_point_name
+    // );
     println!("{}", table);
     Ok(())
 }
