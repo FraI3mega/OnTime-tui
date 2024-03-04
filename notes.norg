@@ -1,0 +1,8 @@
+* main notes
+** getCities.json
+   - stores all data about a city
+   - eg. https://dip.mzkopole.pl/getCities.json
+** getStops.json
+   all stops
+** getRealtime.json
+   requires stopPointSymbol
