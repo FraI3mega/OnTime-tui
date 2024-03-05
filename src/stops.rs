@@ -76,12 +76,11 @@ pub fn select_stop(stops: HashMap<String, u16>) -> Result<u16> {
     // `run_with` would read and show items from the stream
     let selected_items = Skim::run_with(&options, Some(items))
         .map(|out| out.selected_items)
-        .unwrap_or_else(|| Vec::new());
+        .unwrap_or_default();
     Ok(*stops.get(&selected_items[0].output().to_string()).unwrap())
 }
 
 pub fn get_stops(sitemap: Sitemap) -> Result<HashMap<String, u16>> {
-    //TODO: outputs a hashset of stops
     let data = ureq::get(format!("{}{}", sitemap.main_url, sitemap.stops).as_str())
         .call()?
         .into_json::<StopList>()?;
@@ -89,8 +88,18 @@ pub fn get_stops(sitemap: Sitemap) -> Result<HashMap<String, u16>> {
     let mut output: HashMap<String, u16> = HashMap::new();
     for stop in data.stop_points {
         output.insert(
-            stop["name"].to_string(),
-            stop["symbol"].to_string().parse()?,
+            format!(
+                "{} ({})",
+                stop["name"],
+                stop["symbol"]
+                    .to_string()
+                    .replace('\"', "")
+                    .parse::<u16>()?
+            ),
+            stop["symbol"]
+                .to_string()
+                .replace('\"', "")
+                .parse::<u16>()?,
         );
     }
     Ok(output)

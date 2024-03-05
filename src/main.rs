@@ -6,15 +6,14 @@ use color_eyre::Result;
 use comfy_table::Table;
 use time::OffsetDateTime;
 
-use crate::stops::{get_stop_data, select_stop, sitemap::get_sitemap};
+use crate::stops::{get_stop_data, get_stops, select_stop, sitemap::get_sitemap};
 
 fn main() -> Result<()> {
     color_eyre::install()?;
     let sitemap = get_sitemap("https://dip.mzkopole.pl/".to_string())?;
     dbg!(sitemap.clone());
 
-    let stop_str = include_str!("stops.json");
-    let stops: HashMap<String, u16> = serde_json::from_str(stop_str)?;
+    let stops: HashMap<String, u16> = get_stops(sitemap.clone())?;
     let stop_number = select_stop(stops)?;
 
     let stop_data = get_stop_data(sitemap, stop_number)?;
