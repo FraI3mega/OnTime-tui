@@ -6,6 +6,8 @@ use color_eyre::Result;
 use serde::Deserialize;
 use skim::prelude::*;
 
+use crate::stops::sitemap::Sitemap;
+
 #[derive(Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct StopData {
@@ -31,6 +33,12 @@ pub struct BusData {
     _on_stop_point: bool,
     pub line_name: String,
     pub direction_name: String,
+}
+
+#[derive(Deserialize, Debug)]
+#[serde(rename_all = "camelCase")]
+struct StopList {
+    stop_points: Vec<serde_json::Value>,
 }
 
 pub fn get_stop_data(main_url: String, stop_number: u16) -> Result<StopData> {
@@ -72,6 +80,18 @@ pub fn select_stop(stops: HashMap<String, u16>) -> Result<u16> {
     Ok(*stops.get(&selected_items[0].output().to_string()).unwrap())
 }
 
-fn get_stops(url: String) {
-    todo!("Not done")
+pub fn get_stops(sitemap: Sitemap) -> Result<HashMap<String, u16>> {
+    //TODO: outputs a hashset of stops
+    let data = ureq::get(format!("{}{}", sitemap.main_url, sitemap.stops).as_str())
+        .call()?
+        .into_json::<StopList>()?;
+
+    let mut output: HashMap<String, u16> = HashMap::new();
+    for stop in data.stop_points {
+        output.insert(
+            stop["name"].to_string(),
+            stop["symbol"].to_string().parse()?,
+        );
+    }
+    Ok(output)
 }

@@ -1,13 +1,13 @@
 use color_eyre::Result;
 
 pub struct Sitemap {
-    main_url: String,
-    buses: String,
-    stops: String,
-    lines: String,
-    alerts: String,
-    vehicles: String,
-    real_time: String,
+    pub main_url: String,
+    pub buses: String,
+    pub stops: String,
+    pub lines: String,
+    pub alerts: String,
+    pub vehicles: String,
+    pub real_time: String,
 }
 
 pub fn get_sitemap(main_url: String) -> Result<Sitemap> {
