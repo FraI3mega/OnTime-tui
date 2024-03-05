@@ -1,4 +1,4 @@
-mod sitemap;
+pub mod sitemap;
 
 use std::{collections::HashMap, io::Cursor};
 
@@ -41,11 +41,11 @@ struct StopList {
     stop_points: Vec<serde_json::Value>,
 }
 
-pub fn get_stop_data(main_url: String, stop_number: u16) -> Result<StopData> {
+pub fn get_stop_data(sitemap: Sitemap, stop_number: u16) -> Result<StopData> {
     let data: StopData = ureq::get(
         format!(
-            "{}getRealtime.json?stopPointSymbol={}",
-            main_url, stop_number
+            "{}{}?stopPointSymbol={}",
+            sitemap.main_url, sitemap.real_time, stop_number
         )
         .as_str(),
     )
