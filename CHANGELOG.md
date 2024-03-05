@@ -1,3 +1,15 @@
+## 1.1.0 (2024-03-05)
+
+### ✨ Features
+
+- **stops.rs**: get stops from website
+- **sitemap.rs**: add sitemap parsing
+
+### 🐛🚑️ Fixes
+
+- fix program
+- **sitemap.rs**: fix sitemap
+
 ## 1.0.0 (2024-03-04)
 
 ### ✨ Features
