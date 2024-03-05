@@ -2,7 +2,7 @@ mod stops;
 
 use std::collections::HashMap;
 
-use color_eyre::eyre::Result;
+use color_eyre::Result;
 use comfy_table::Table;
 use time::OffsetDateTime;
 
