@@ -1,15 +1,26 @@
 [package]
 name = "ontime-cli"
-version = "1.1.0"
 edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+version = "1.1.0"
 
 [dependencies]
-color-eyre = "0.6.2"
-ureq = { version = "2.9.6", features = ["json"] }
-serde = { version = "1", features = ["derive"] }
-serde_json = "1.0.114"
-comfy-table = "7.1.0"
-time = { version = "0.3", features = ["macros", "local-offset"] }
-skim = "0.10.4"
+comfy-table = { default-features = false, version = "7.1.0" }
+serde_json = { default-features = false, version = "1.0.114" }
+skim = { default-features = false, version = "0.10.4" }
+
+[dependencies.color-eyre]
+version = "0.6.2"
+features = ["track-caller"]
+default-features = false
+
+[dependencies.serde]
+version = "1"
+features = ["derive"]
+
+[dependencies.time]
+version = "0.3"
+features = ["macros", "local-offset"]
+
+[dependencies.ureq]
+version = "2.9.6"
+features = ["json"]
