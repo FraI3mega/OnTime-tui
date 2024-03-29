@@ -6,6 +6,7 @@ use std::collections::HashMap;
 use clap::Parser;
 use color_eyre::Result;
 use comfy_table::Table;
+use serde::{Deserialize, Serialize};
 use time::OffsetDateTime;
 
 use crate::{
@@ -13,10 +14,27 @@ use crate::{
     stops::{get_stop_data, get_stops, select_stop, sitemap::get_sitemap},
 };
 
+#[derive(Debug, Serialize, Deserialize)]
+struct Config {
+    main_url: String,
+}
+
+impl Default for Config {
+    fn default() -> Self {
+        Self {
+            main_url: "https://dip.mzkopole.pl/".to_string(),
+        }
+    }
+}
+
 fn main() -> Result<()> {
     color_eyre::install()?;
     let cli = Cli::parse();
-    let sitemap = get_sitemap(cli.main_url)?;
+    let config: Config = confy::load("ontime-tui", Some("config"))?;
+    let sitemap = get_sitemap(match cli.main_url {
+        Some(n) => n,
+        None => config.main_url,
+    })?;
 
     let stops: HashMap<String, u32> = get_stops(sitemap.clone())?;
     let stop_number = match cli.stop_number {
