@@ -1,9 +1,12 @@
 [package]
-name = "ontime-cli"
+name = "ontime-tui"
 edition = "2021"
 version = "1.1.0"
+authors = ["FraI3mega"]
+description = "A tui/cli for the OnTime transit timetable system"
 
 [dependencies]
+clap = { version = "4.5.4", features = ["derive"] }
 comfy-table = { default-features = false, version = "7.1.0" }
 serde_json = { default-features = false, version = "1.0.114" }
 skim = { default-features = false, version = "0.10.4" }
