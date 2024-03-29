@@ -1,19 +1,28 @@
+mod cli;
 mod stops;
 
 use std::collections::HashMap;
 
+use clap::Parser;
 use color_eyre::Result;
 use comfy_table::Table;
 use time::OffsetDateTime;
 
-use crate::stops::{get_stop_data, get_stops, select_stop, sitemap::get_sitemap};
+use crate::{
+    cli::Cli,
+    stops::{get_stop_data, get_stops, select_stop, sitemap::get_sitemap},
+};
 
 fn main() -> Result<()> {
     color_eyre::install()?;
-    let sitemap = get_sitemap("https://dip.mzkopole.pl/".to_string())?;
+    let cli = Cli::parse();
+    let sitemap = get_sitemap(cli.main_url)?;
 
-    let stops: HashMap<String, u16> = get_stops(sitemap.clone())?;
-    let stop_number = select_stop(stops)?;
+    let stops: HashMap<String, u32> = get_stops(sitemap.clone())?;
+    let stop_number = match cli.stop_number {
+        Some(n) => n,
+        None => select_stop(stops)?,
+    };
 
     let stop_data = get_stop_data(sitemap, stop_number)?;
     let mut table = Table::new();

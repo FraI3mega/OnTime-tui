@@ -12,7 +12,7 @@ use crate::stops::sitemap::Sitemap;
 #[serde(rename_all = "camelCase")]
 pub struct StopData {
     _stop_point_symbol: String,
-    _stop_point_id: u16,
+    _stop_point_id: u32,
     _stop_point_name: String,
     _response_date: usize,
     pub departures: Vec<BusData>,
@@ -27,7 +27,7 @@ pub struct BusData {
     pub real_departure: i64, // NOTE: this in in miliseconds
     _vehicle_id: String,
     _variant_id: u32,
-    _order_in_course: u16,
+    _order_in_course: u32,
     _passed: bool,
     _lack: bool,
     _on_stop_point: bool,
@@ -41,7 +41,7 @@ struct StopList {
     stop_points: Vec<serde_json::Value>,
 }
 
-pub fn get_stop_data(sitemap: Sitemap, stop_number: u16) -> Result<StopData> {
+pub fn get_stop_data(sitemap: Sitemap, stop_number: u32) -> Result<StopData> {
     let data: StopData = ureq::get(
         format!(
             "{}{}?stopPointSymbol={}",
@@ -55,7 +55,7 @@ pub fn get_stop_data(sitemap: Sitemap, stop_number: u16) -> Result<StopData> {
     Ok(data)
 }
 
-pub fn select_stop(stops: HashMap<String, u16>) -> Result<u16> {
+pub fn select_stop(stops: HashMap<String, u32>) -> Result<u32> {
     let options = SkimOptionsBuilder::default()
         .height(Some("50%"))
         .multi(true)
@@ -80,12 +80,12 @@ pub fn select_stop(stops: HashMap<String, u16>) -> Result<u16> {
     Ok(*stops.get(&selected_items[0].output().to_string()).unwrap())
 }
 
-pub fn get_stops(sitemap: Sitemap) -> Result<HashMap<String, u16>> {
+pub fn get_stops(sitemap: Sitemap) -> Result<HashMap<String, u32>> {
     let data = ureq::get(format!("{}{}", sitemap.main_url, sitemap.stops).as_str())
         .call()?
         .into_json::<StopList>()?;
 
-    let mut output: HashMap<String, u16> = HashMap::new();
+    let mut output: HashMap<String, u32> = HashMap::new();
     for stop in data.stop_points {
         output.insert(
             format!(
@@ -94,12 +94,12 @@ pub fn get_stops(sitemap: Sitemap) -> Result<HashMap<String, u16>> {
                 stop["symbol"]
                     .to_string()
                     .replace('\"', "")
-                    .parse::<u16>()?
+                    .parse::<u32>()?
             ),
             stop["symbol"]
                 .to_string()
                 .replace('\"', "")
-                .parse::<u16>()?,
+                .parse::<u32>()?,
         );
     }
     Ok(output)
