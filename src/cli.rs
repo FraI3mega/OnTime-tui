@@ -8,6 +8,6 @@ pub struct Cli {
     pub stop_number: Option<u32>,
 
     /// Main url
-    #[arg(long, default_value_t = String::from( "https://dip.mzkopole.pl/" ))]
-    pub main_url: String,
+    #[arg(long)]
+    pub main_url: Option<String>,
 }
