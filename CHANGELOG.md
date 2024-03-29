@@ -1,3 +1,23 @@
+## 1.2.0 (2024-03-29)
+
+### ✨ Features
+
+- add config file
+- add basic cli
+
+### 🐛🚑️ Fixes
+
+- **main.rs**: remove dbg! call
+
+### ⚡️ Performance
+
+- remove unnecesary features
+
+### 📝💡 Documentation
+
+- **README.md**: add a simple README
+- **Cargo.toml**: rename package
+
 ## 1.1.0 (2024-03-05)
 
 ### ✨ Features
