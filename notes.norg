@@ -8,11 +8,13 @@
    requires stopPointSymbol
 
 * TODO
-  - (x) implement a config file
-  -- (x) define config location
-  -- (x) read and parse the config file
-  - ( ) add a tui
-  -- (?) figure out how ratatui works
-  -- ( ) implement the app state
-  -- ( ) implement the ui
+  - (x) 1.2.0
+  -- (x) implement a config file
+  --- (x) define config location
+  --- (x) read and parse the config file
+  - ( ) 2.0.0
+  -- ( ) add a tui
+  --- ( ) figure out how ratatui works
+  --- ( ) implement the app state
+  --- ( ) implement the ui
 
