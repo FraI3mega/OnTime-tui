@@ -6,3 +6,13 @@
    all stops
 ** getRealtime.json
    requires stopPointSymbol
+
+* TODO
+  - (x) implement a config file
+  -- (x) define config location
+  -- (x) read and parse the config file
+  - ( ) add a tui
+  -- (?) figure out how ratatui works
+  -- ( ) implement the app state
+  -- ( ) implement the ui
+
